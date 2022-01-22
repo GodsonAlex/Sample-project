@@ -11,24 +11,24 @@ public class User {
 
 
 
-        @GetMapping
-        public String hello(){
-            return "Hello World";
-        }
-
-
-        @GetMapping(value = "/getdata")
-        public String Test(){
-            return "Checking";
-        }
-
-
-
-
-
-
-
-
+    @GetMapping
+    public String hello(){
+        return "Hello World";
     }
+
+
+    @GetMapping(value = "/getdata")
+    public String Test(){
+        return "Checking";
+    }
+
+
+
+
+
+
+
+
+}
 
 
