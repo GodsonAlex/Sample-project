@@ -34,12 +34,17 @@ public class DataUserService implements UserDetailsService {
     public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
         Optional<MyUser> myUser = userRepository.findByUserName(login);
         return myUser.map(user->{
-            List<Authority> authorityList = authorityRepository.findByRoleId(user.getRoleId());
-            String roleName = roleRepository.findById(user.getRoleId()).get().getRoleName();
-            List<GrantedAuthority> grantedAuthorityList = authorityList.stream().map(authority ->new SimpleGrantedAuthority(authority.getAuthorityName())).collect(Collectors.toList());
-            UserDetails userDetails = new ApplicationUser(login, user.getPassword(),grantedAuthorityList,roleName);
-            return userDetails;
-        }).orElseThrow(()->new UsernameNotFoundException("Users not found"));
+                    List<Authority> authorityList = authorityRepository.findByRoleId(user.getRoleId());
+                    String roleName = roleRepository.findById(user.getRoleId()).get().getRoleName();
+                    List<GrantedAuthority> grantedAuthorityList = authorityList.stream().map(authority ->new SimpleGrantedAuthority(authority.getAuthorityName())).collect(Collectors.toList());
+                    UserDetails userDetails = new ApplicationUser(login, user.getPassword(),grantedAuthorityList,roleName);
+                    return userDetails;
+                })
+                .orElseThrow(()->{
+                    System.out.println("TESTS");
+                    return new UsernameNotFoundException("Users not found");
+                });
+
     }
 
 }
