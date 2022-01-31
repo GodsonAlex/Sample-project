@@ -24,18 +24,18 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @EnableWebSecurity
 public class ApplicationSecurity extends WebSecurityConfigurerAdapter {
 
-//    @Autowired
-//    private DataUserService dataUserService;
+    @Autowired
+    private DataUserService dataUserService;
 
 //    @Autowired
 //    private PasswordConfig passwordConfig;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable().authorizeRequests().
+       http.csrf().disable().authorizeRequests().
 //               antMatchers("getdata").permitAll().
-        anyRequest().authenticated().and().httpBasic().and().logout()
-                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"));
+               anyRequest().authenticated().and().httpBasic().and().logout().permitAll();
+
     }
 
 
@@ -49,17 +49,13 @@ public class ApplicationSecurity extends WebSecurityConfigurerAdapter {
         auth.authenticationProvider(getAuthentication());
     }
 
-    @Bean
-    public UserDetailsService userDetailsService(){
-        UserDetails user =  User.builder().username("test").password(passwordEncoder()
-                .encode("godson")).roles("admin").build();
-        return  new InMemoryUserDetailsManager(user);
-    }
+
+
 
     @Bean
     public DaoAuthenticationProvider getAuthentication(){
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
-        provider.setUserDetailsService(userDetailsService());
+        provider.setUserDetailsService(dataUserService);
         provider.setPasswordEncoder(passwordEncoder());
         return provider;
     }

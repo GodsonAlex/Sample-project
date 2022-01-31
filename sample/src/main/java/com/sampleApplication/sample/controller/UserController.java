@@ -7,28 +7,28 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RequestMapping("/user")
 @RestController
-public class User {
+public class UserController {
 
 
 
-    @GetMapping
-    public String hello(){
-        return "Hello World";
+        @GetMapping
+        public String hello(){
+            return "Hello World";
+        }
+
+
+        @GetMapping(value = "/getdata")
+        public String Test(){
+            return "Checking";
+        }
+
+
+
+
+
+
+
+
     }
-
-
-    @GetMapping(value = "/getdata")
-    public String Test(){
-        return "Checking";
-    }
-
-
-
-
-
-
-
-
-}
 
 
